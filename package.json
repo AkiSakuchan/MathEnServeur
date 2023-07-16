@@ -11,5 +11,8 @@
     "TikzCD"
   ],
   "author": "Aki",
-  "license": "MPL-2.0"
+  "license": "MPL-2.0",
+  "dependencies": {
+    "mathjax-full": "^3.2.2"
+  }
 }

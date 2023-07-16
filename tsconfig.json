@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "incremental": true,
+        "tsBuildInfoFile": "./buildInfo/info.tsbuildinfo",
+        "target": "ES2016",
+        "allowJs": false,
+        "checkJs": false,
+        "module": "ES2016",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "removeComments": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictBindCallApply": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "esModuleInterop": true,
+        "inlineSourceMap": false,
+        "inlineSources": false,
+        "moduleResolution": "Node",
+        "baseUrl": "./node_modules",
+        "jsx": "preserve"
+    },
+    "exclude": ["node_modules"],
+    "include": ["./src/**/*"]
+}

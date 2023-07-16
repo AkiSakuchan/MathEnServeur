@@ -11,8 +11,11 @@
     "TikzCD"
   ],
   "author": "Aki",
-  "license": "MPL-2.0",
+  "license": "Mozilla v2.0",
   "dependencies": {
     "mathjax-full": "^3.2.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
   }
 }

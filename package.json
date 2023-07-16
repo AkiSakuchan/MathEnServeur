@@ -1,0 +1,15 @@
+{
+  "name": "math-en-serveur",
+  "version": "1.0.0",
+  "description": "在服务端解析数学公式和tikzcd",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MathJax",
+    "TikzCD"
+  ],
+  "author": "Aki",
+  "license": "MPL-2.0"
+}

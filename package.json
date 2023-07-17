@@ -5,10 +5,12 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=src src/grpc-serveur.proto && tsc",
+    "start": "node ./dist/tex-html.js"
   },
   "keywords": [
-    "MathJax",
+    "katex",
     "TikzCD"
   ],
   "author": "Aki",
@@ -16,9 +18,11 @@
   "devDependencies": {
     "@types/katex": "^0.16.1",
     "@types/node": "^20.4.2",
+    "grpc-tools": "^1.12.4",
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.18",
     "katex": "^0.16.8"
   }
 }

@@ -2,3 +2,5 @@
 /node_modules/
 /dist
 /buildInfo
+/src/commutationJsPhp
+/src/grpc-serveur.ts

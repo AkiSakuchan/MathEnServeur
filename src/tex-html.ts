@@ -1,59 +1,58 @@
 import katex from "katex";
-import { createServer } from "http";
-//console.log(katex.renderToString("\\mathscr\{O\}", { displayMode: true, output: "html"}));
+import grpc from "@grpc/grpc-js";
+import protoLoader from "@grpc/proto-loader";
+import { ProtoGrpcType } from "./grpc-serveur";
+import { RPCHandlers } from './commutationJsPhp/RPC';
 
-let server = createServer( (request, reponse) =>
-{
-    if(request.method !== 'POST')
-    {
-        reponse.statusCode = 400;
-        reponse.setHeader( 'Content-Type', 'text/plain');
-        reponse.end('请发送POST请求');
-    }
-    else
-    {
-        let body = '';
-        request.on('data', (data) => (body += data));
-        request.on('end', function()
+protoLoader.load('./src/grpc-serveur.proto').then(packageDefinition =>{
+    const RPCServer : RPCHandlers = {
+        render(call, callback)
         {
-            let post = JSON.parse(body);
-            let type = post['displayMode'] ?? false;    // 表示默认采取行内公式模式
-            let tex = post['tex'] ?? '';
-
-            reponse.statusCode = 200;
-            reponse.setHeader( 'Content-Type', 'text/plain');
-
-            let result:string;
-
-            if( tex === '')
+            try
             {
-                reponse.end('');
-            }
-            else
-            {
-                try
+                let type = call.request.display as boolean;
+                let tex = call.request.tex as string;
+
+                if( tex === '')
                 {
-                    result = katex.renderToString( tex, { displayMode: type, output: 'html'});
-                    reponse.end(result);
+                    callback && callback(null, {html: ''});
                 }
-                catch(err)
+                else
                 {
-                    if(err instanceof katex.ParseError)
+                    try
                     {
-                        result = ("Error in LaTeX: " + err.message)
-                        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                        reponse.end(result);
+                        callback && callback(null, {html: katex.renderToString( tex, { displayMode: type, output: 'html'})});
                     }
-                    else
+                    catch(err)
                     {
-                        throw err;
+                        if(err instanceof katex.ParseError)
+                        {
+                            let result = ("LaTeX 代码错误: " + err.message)
+                            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                            callback && callback(null, {html: result});
+                        }
+                        else
+                        {
+                            console.log('服务端出错');
+                            throw err;
+                        }
                     }
                 }
             }
-        });
+            catch(err)
+            {
+                console.log('服务端出错');
+                //@ts-ignore
+                callback && callback(err);
+            }
+        }
     }
-});
 
-server.listen(1200, '0.0.0.0', ()=>{
-    console.log("收到信息,正在处理");
+    const descriptor = ( grpc.loadPackageDefinition(packageDefinition) as unknown) as ProtoGrpcType;
+    const server = new grpc.Server();
+    server.addService(descriptor.commutationJsPhp.RPC.service, RPCServer);
+
+    server.bindAsync('0.0.0.0:1200', grpc.ServerCredentials.createInsecure(), () => {server.start(); console.log('服务已启动');});
+}).catch(err => {
+    console.log('服务未能启动', err);
 });

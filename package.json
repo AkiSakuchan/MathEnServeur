@@ -2,6 +2,7 @@
   "name": "math-en-serveur",
   "version": "1.0.0",
   "description": "在服务端解析数学公式和tikzcd",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,10 +13,12 @@
   ],
   "author": "Aki",
   "license": "Mozilla v2.0",
-  "dependencies": {
-    "mathjax-full": "^3.2.2"
-  },
   "devDependencies": {
+    "@types/katex": "^0.16.1",
+    "@types/node": "^20.4.2",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "katex": "^0.16.8"
   }
 }

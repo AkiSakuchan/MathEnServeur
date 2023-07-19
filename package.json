@@ -1,6 +1,6 @@
 {
   "name": "math-en-serveur",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "在服务端解析数学公式和tikzcd",
   "type": "module",
   "main": "dist/tex-html.js",

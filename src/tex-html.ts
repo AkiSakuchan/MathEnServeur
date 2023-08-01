@@ -70,11 +70,11 @@ server.on('connection', (socket) => {
         {
             console.log('连接正常关闭');
         }
-    })
+    });
     
     socket.on('error', (err) => {
         console.log('错误:',err.message);
-    })
+    });
     console.log('建立监听函数');
 });
 server.on('error', (err:NodeJS.ErrnoException)=>{
@@ -82,7 +82,7 @@ server.on('error', (err:NodeJS.ErrnoException)=>{
     {
         console.log('套接字 ' + socketPath + ' 已被占用, 请换一个路径或删除对应套接字文件');
         process.exit(1);
-    }
+    } 
 });
 server.listen(socketPath, ()=> console.log('监听中'));
 
